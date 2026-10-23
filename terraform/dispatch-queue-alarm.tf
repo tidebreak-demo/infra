@@ -10,7 +10,7 @@ resource "aws_sqs_queue" "dispatch_queue_alarm_dlq" {
 
 resource "aws_sqs_queue" "dispatch_queue_alarm" {
   name                       = "dispatch-queue-alarm"
-  visibility_timeout_seconds = 120
+  visibility_timeout_seconds = 180
   message_retention_seconds  = 345600
 
   redrive_policy = jsonencode({
@@ -30,7 +30,7 @@ resource "aws_cloudwatch_metric_alarm" "dispatch_queue_alarm_backlog" {
   statistic           = "Maximum"
   period              = 60
   evaluation_periods  = 5
-  threshold           = 50
+  threshold           = 100
   comparison_operator = "GreaterThanThreshold"
 
   dimensions = {
